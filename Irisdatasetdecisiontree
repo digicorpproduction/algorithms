@@ -1,0 +1,34 @@
+In this example, we are using the Iris dataset from Scikit-learn. The script splits the dataset into training and testing sets, creates a decision tree classifier, trains it on the training data, makes predictions on the testing data, and evaluates the model's accuracy.
+
+Note: This is a basic example to illustrate the steps involved in creating a decision tree in Python. Depending on your specific use case, you may need to modify the code accordingly.
+
+#####Script
+
+# Step 1: Install necessary libraries
+# pip install scikit-learn
+
+# Step 2: Import libraries and modules
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import metrics
+
+# Step 3: Load the dataset
+dataset = datasets.load_iris()
+X = dataset.data
+y = dataset.target
+
+# Step 4: Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+
+# Step 5: Create a decision tree classifier
+clf = DecisionTreeClassifier()
+
+# Step 6: Train the classifier on the training data
+clf.fit(X_train, y_train)
+
+# Step 7: Make predictions on the testing data
+y_pred = clf.predict(X_test)
+
+# Step 8: Evaluate the model
+print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
