@@ -8,28 +8,28 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 
-# Step 1: Import historical data from an Excel sheet
-data = pd.read_excel('historical_data.xlsx')
+# Step 1: Import historical data from Excel sheet
+excel_file_path = 'path_to_excel_file_on_desktop.xlsx'
+data = pd.read_excel(excel_file_path)
 
-# Step 2: Input new values for service, date, and amount
-new_service = input("Enter the service: ")
-new_date = input("Enter the date (in YYYY-MM-DD format): ")
-new_amount = float(input("Enter the amount: "))
+# Step 2: Split the data into input features (X) and target variable (y)
+X = data[['service', 'date']]
+y = data['amount']
 
-# Step 3: Prepare the data for regression
-X = data[['Service', 'Date']]  # Features: Service and Date
-y = data['Amount']  # Target variable: Amount
-
-# Step 4: Split the data into training and testing sets
+# Step 3: Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Step 5: Create and train the regression tree model
-reg_tree = DecisionTreeRegressor()
-reg_tree.fit(X_train, y_train)
+# Step 4: Create and train the regression tree model
+model = DecisionTreeRegressor()
+model.fit(X_train, y_train)
 
-# Step 6: Predict future values
-new_data = [[new_service, new_date]]
-predicted_amount = reg_tree.predict(new_data)
+# Step 5: Input new values for service and date
+new_service = input("Enter the service: ")
+new_date = input("Enter the date (in YYYY-MM-DD format): ")
 
-# Step 7: Display the predicted amount
-print("Predicted amount:", predicted_amount[0])
+# Step 6: Predict the amount for the new values
+new_data = pd.DataFrame({'service': [new_service], 'date': [new_date]})
+predicted_amount = model.predict(new_data)
+
+# Step 7: Print the predicted amount
+print("Predicted amount:", predicted_amount)
