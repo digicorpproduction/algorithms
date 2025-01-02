@@ -1,0 +1,35 @@
+Please make sure to have the pandas and scikit-learn libraries installed on your system. Also, update the file name 'historical_data.xlsx' with the actual name and path of your historical data Excel sheet.
+
+In this script, you can input the service, date, and amount for the new data point. The historical data is imported from the Excel sheet. The script then prepares the data for regression, splits it into training and testing sets, and trains a regression tree model using the training data. Finally, it uses the trained model to predict the amount for the new data point and displays the predicted amount.
+
+Note: This is a basic example and assumes that the historical data and the new data have the same structure and features.
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+
+# Step 1: Import historical data from an Excel sheet
+data = pd.read_excel('historical_data.xlsx')
+
+# Step 2: Input new values for service, date, and amount
+new_service = input("Enter the service: ")
+new_date = input("Enter the date (in YYYY-MM-DD format): ")
+new_amount = float(input("Enter the amount: "))
+
+# Step 3: Prepare the data for regression
+X = data[['Service', 'Date']]  # Features: Service and Date
+y = data['Amount']  # Target variable: Amount
+
+# Step 4: Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 5: Create and train the regression tree model
+reg_tree = DecisionTreeRegressor()
+reg_tree.fit(X_train, y_train)
+
+# Step 6: Predict future values
+new_data = [[new_service, new_date]]
+predicted_amount = reg_tree.predict(new_data)
+
+# Step 7: Display the predicted amount
+print("Predicted amount:", predicted_amount[0])
